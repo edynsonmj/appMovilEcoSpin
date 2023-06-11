@@ -105,7 +105,7 @@ fun EcoSpinApp() {
 
         NavHost(
             navController = navController,
-            startDestination = EcoSpinScreen.MenuPrincipal.name,
+            startDestination = EcoSpinScreen.Registro.name,
             modifier = Modifier.padding(innerPadding),
         ) {
             composable(route = EcoSpinScreen.MenuPrincipal.name) {

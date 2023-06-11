@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.sp
 import com.example.lunchtray.R
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
-@Preview
 @Composable
 fun MenuPrincipalScreen(
     historialBotonClick: () -> Unit,
@@ -70,4 +69,10 @@ fun MenuPrincipalScreen(
         }
 
     }
+}
+
+@Preview
+@Composable
+fun MenuPrincipalScreenPreview(){
+    MenuPrincipalScreen(historialBotonClick = { /*TODO*/ })
 }
