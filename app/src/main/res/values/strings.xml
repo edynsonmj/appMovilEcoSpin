@@ -18,7 +18,7 @@
     <string name="menu_principal">Menu Principal</string>
     <string name="registro">Registro de usuario</string>
     <string name="historial_pago">Historial de pago</string>
-    <string name="inicio">Inicio</string>
+    <string name="inicio">Inicio de sesion</string>
 
     <string name="opciones">Opciones de transporte</string>
 

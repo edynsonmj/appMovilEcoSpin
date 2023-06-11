@@ -29,6 +29,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -64,7 +66,7 @@ fun EcoSpinAppBar(
     modifier: Modifier = Modifier
 ) {
     CenterAlignedTopAppBar(
-        title = { Text(stringResource(currentScreenTitle)) },
+        title = { Text(stringResource(currentScreenTitle), fontWeight = FontWeight.Bold) },
         modifier = modifier,
         navigationIcon = {
             if (canNavigateBack) {
@@ -105,7 +107,7 @@ fun EcoSpinApp() {
 
         NavHost(
             navController = navController,
-            startDestination = EcoSpinScreen.Registro.name,
+            startDestination = EcoSpinScreen.Inicio.name,
             modifier = Modifier.padding(innerPadding),
         ) {
             composable(route = EcoSpinScreen.MenuPrincipal.name) {
