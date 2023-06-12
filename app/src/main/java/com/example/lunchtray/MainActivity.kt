@@ -19,7 +19,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.example.lunchtray.ui.theme.EcoSpinTheme
-
+//TODO: Nota
+//maquetaciones de todas las vistas hechas, pero solo menu y historico tienen funcionalidad con la base de datos.
+//Repositorio no fue posible usarlo, se accede directamente desde el view model a la base de datos.
+//          entre las dificultades la no compatibilidad de la libreria hill para realizar inyecciones de dependencias
+//          problemas para gestiones el estado de un query a la base de datos.
+//los elementos del historial son cargados en su mayoria como string por cuestiones de tiempo.
+//          si se agregan mas elementos los nombre y tipos de datos deben coincidir perfectamente con los del modelo de la aplicacion, lo contrario probocara el cierre de la aplicacion de forma prematura
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

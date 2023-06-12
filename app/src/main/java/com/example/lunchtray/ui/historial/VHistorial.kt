@@ -61,6 +61,10 @@ fun ItemList(fecha: String,hora: String,valor:String,vehiculo:String){
     }
 }
 
+//TODO: este marcador dividiria los pagos por fecha, para implementar a posterior, es necesario cambiar en la base de datos la fecha a formato fecha.
+//luego hacer un sort en base en la fecha a la lista que se aloja en el state
+//poner condicional revisando la fecha en la columna desplazable.
+//si la fecha cambia desde la anterior (otro dia), llamar esta funcion pasando la fecha nueva
 @Composable()
 fun Marcador(){
     Row(

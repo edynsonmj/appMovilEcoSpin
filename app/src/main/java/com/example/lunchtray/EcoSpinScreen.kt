@@ -36,10 +36,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.lunchtray.ui.historial.HistorialScreen
-import com.example.lunchtray.ui.InicioScreen
-import com.example.lunchtray.ui.MenuPrincipalScreen
+import com.example.lunchtray.ui.inicio.InicioScreen
+import com.example.lunchtray.ui.menu.MenuPrincipalScreen
 import com.example.lunchtray.ui.ViewModelApp
-import com.example.lunchtray.ui.RegistroScreen
+import com.example.lunchtray.ui.registro.RegistroScreen
 
 enum class EcoSpinScreen(@StringRes val title: Int) {
     Start(title = R.string.app_name),
@@ -102,10 +102,12 @@ fun EcoSpinApp() {
             )
         }
     ) { innerPadding ->
-        val uiState by viewModel.uiState.collectAsState()
+        val uiState by viewModel.hitorialState.collectAsState()
 
         NavHost(
             navController = navController,
+            //TODO: ATENCION: aqui se cambia la pantalla inicial de la aplicacion
+            //EcoSpinScreen define la ruta, solo hay que llamar, cambiar para iniciar con otra vista
             startDestination = EcoSpinScreen.MenuPrincipal.name,
             modifier = Modifier.padding(innerPadding),
         ) {

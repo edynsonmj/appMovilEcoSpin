@@ -19,58 +19,23 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.lunchtray.model.HistorialItem
-import com.example.lunchtray.model.MenuItem
-import com.example.lunchtray.model.MenuItem.AccompanimentItem
-import com.example.lunchtray.model.MenuItem.EntreeItem
-import com.example.lunchtray.model.MenuItem.SideDishItem
-import com.example.lunchtray.model.OrderUiState
-import com.example.lunchtray.repositories.HistorialRepository
-import com.example.lunchtray.repositories.ResultHistorico
 import com.example.lunchtray.ui.historial.HistorialState
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.tasks.await
-import java.text.NumberFormat
 
 class ViewModelApp : ViewModel() {
-
-    private val taxRate = 0.08
-
-    private val _uiState = MutableStateFlow(OrderUiState())
-    val uiState: StateFlow<OrderUiState> = _uiState.asStateFlow()
 
     private val _historialState = MutableStateFlow(HistorialState())
     val hitorialState: StateFlow<HistorialState> = _historialState.asStateFlow()
 
-    private val historialRepository = HistorialRepository()
-
+    //Atencion: se accede directamente a la base de datos, lo ideal seria tener un repositorio para ello
+    //no fue posible de momento - incompatibilidad con la librerial Hill para inyeccion de dependencias y gestion del los estados del query a la base de datos.
     private val db = Firebase.firestore
     init {
         getHistorial2()
-    }
-    fun getHistorial(){
-        historialRepository.listarHistorial().onEach { result ->
-            when(result){
-                is ResultHistorico.Error -> {
-                    _historialState.value = HistorialState(error = result.message ?: "Error Inesperado")
-                }
-                is ResultHistorico.Loading -> {
-                    _historialState.value = HistorialState(isLoading = true)
-                }
-                is ResultHistorico.Success -> {
-                    _historialState.value = HistorialState(historial = result.Data ?: emptyList())
-                }
-            }
-        }
-        _historialState
     }
 
     fun getHistorial2(){
@@ -92,61 +57,4 @@ class ViewModelApp : ViewModel() {
                 Log.w(TAG, "Error getting documents.", exception)
             }
     }
-
-    fun listarHistorial() : Flow<ResultHistorico<List<HistorialItem>>> = flow{
-        try{
-            emit(ResultHistorico.Loading<List<HistorialItem>>())
-            val listaHistoria = db.collection("historial")
-                .get()
-                .await()
-                .map{
-                        document->document.toObject(HistorialItem::class.java)
-                }
-            println("CONSULTA A LA LISTA TAMAÑO: "+listaHistoria.size)
-            emit(ResultHistorico.Success<List<HistorialItem>>(data=listaHistoria))
-        }catch (e: Exception){
-            emit(ResultHistorico.Error<List<HistorialItem>>(message = e.localizedMessage ?: "Error desconocido"))
-        }
-    }
-
-    fun updateEntree(entree: EntreeItem) {
-        val previousEntree = _uiState.value.entree
-        updateItem(entree, previousEntree)
-    }
-
-    fun updateSideDish(sideDish: SideDishItem) {
-        val previousSideDish = _uiState.value.sideDish
-        updateItem(sideDish, previousSideDish)
-    }
-
-    fun updateAccompaniment(accompaniment: AccompanimentItem) {
-        val previousAccompaniment = _uiState.value.accompaniment
-        updateItem(accompaniment, previousAccompaniment)
-    }
-
-    fun resetOrder() {
-        _uiState.value = OrderUiState()
-    }
-
-    private fun updateItem(newItem: MenuItem, previousItem: MenuItem?) {
-        _uiState.update { currentState ->
-            val previousItemPrice = previousItem?.price ?: 0.0
-            // subtract previous item price in case an item of this category was already added.
-            val itemTotalPrice = currentState.itemTotalPrice - previousItemPrice + newItem.price
-            // recalculate tax
-            val tax = itemTotalPrice * taxRate
-            currentState.copy(
-                itemTotalPrice = itemTotalPrice,
-                orderTax = tax,
-                orderTotalPrice = itemTotalPrice + tax,
-                entree = if (newItem is EntreeItem) newItem else currentState.entree,
-                sideDish = if (newItem is SideDishItem) newItem else currentState.sideDish,
-                accompaniment = if(newItem is AccompanimentItem) newItem else
-                    currentState.accompaniment
-            )
-        }
-    }
-}
-fun Double.formatPrice(): String {
-    return NumberFormat.getCurrencyInstance().format(this)
 }

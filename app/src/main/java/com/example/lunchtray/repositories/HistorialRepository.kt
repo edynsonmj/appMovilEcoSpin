@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 
+//TODO: atencion, no fue posible usar repositorio, se ha accedido directamente desde el view model
 class HistorialRepository()
 {
     val db = FirebaseFirestore.getInstance()
