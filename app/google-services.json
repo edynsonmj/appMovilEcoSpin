@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "589209662199",
+    "project_id": "ecospin-bac28",
+    "storage_bucket": "ecospin-bac28.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589209662199:android:9cfff089ab4ae1f77b19f2",
+        "android_client_info": {
+          "package_name": "com.example.lunchtray"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589209662199-mh1n3e5d794fjf4f1h1fac1be214idl2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAByUaWnUGhtkf4HEa70aaEHr2P0Ue7lLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589209662199-mh1n3e5d794fjf4f1h1fac1be214idl2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -29,17 +29,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.lunchtray.ui.HistorialScreen
+import com.example.lunchtray.ui.historial.HistorialScreen
 import com.example.lunchtray.ui.InicioScreen
 import com.example.lunchtray.ui.MenuPrincipalScreen
-import com.example.lunchtray.ui.OrderViewModel
+import com.example.lunchtray.ui.ViewModelApp
 import com.example.lunchtray.ui.RegistroScreen
 
 enum class EcoSpinScreen(@StringRes val title: Int) {
@@ -92,7 +91,7 @@ fun EcoSpinApp() {
         backStackEntry?.destination?.route ?: EcoSpinScreen.Start.name
     )
     // Create ViewModel
-    val viewModel: OrderViewModel = viewModel()
+    val viewModel: ViewModelApp = viewModel()
 
     Scaffold(
         topBar = {
@@ -124,7 +123,7 @@ fun EcoSpinApp() {
             }
 
             composable(route = EcoSpinScreen.Historial.name) {
-                HistorialScreen()
+                HistorialScreen(viewModel)
             }
 
             composable(route = EcoSpinScreen.Inicio.name) {
